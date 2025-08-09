@@ -1,4 +1,4 @@
-# 3h-full-course
+# mini-blog-project
 
 A Django blog project following a YouTube tutorial.
 

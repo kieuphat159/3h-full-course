@@ -1,8 +1,19 @@
 {% extends "layout.html" %}
+{% load static %}
 
 {% block title %}Home{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
 {% block content %}
-    <h1>Welcome Home</h1>
-    <p>Check out my <a class="content-link" href="/about">About</a> page</p>
+<section class="home-section">
+    <div class="home-card">
+        <h1 class="home-title">Welcome to My Blog</h1>
+        <p class="home-subtitle">
+            Sharing ideas, projects, and personal experiences with Django & Web Development.
+        </p>
+    </div>
+</section>
 {% endblock %}

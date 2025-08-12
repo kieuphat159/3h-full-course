@@ -1,14 +1,26 @@
 {% extends "layout.html" %}
+{% load static %}
 
 {% block title %}{{ post.title }}{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/post_page.css' %}">
+{% endblock %}
+
 {% block content %}
-    <section>
-        {% if post.banner %}
-            <img class="banner" src="{{ post.banner.url }}" alt="{{ post.title }}">
-        {% endif %}
-        <h1>{{ post.title }}</h1>
-        <p><small>{{ post.date }}</small></p>
-        <p>{{ post.body }}</p>
-    </section>
+<section class="post-detail">
+    {% if post.banner %}
+        <img class="post-banner" src="{{ post.banner.url }}" alt="{{ post.title }}">
+    {% endif %}
+
+    <h1 class="post-title">{{ post.title }}</h1>
+    <div class="post-meta">
+        <span>By {{ post.author.username }}</span> | 
+        <span>{{ post.date }}</span>
+    </div>
+
+    <div class="post-body">
+        {{ post.body|linebreaks }}
+    </div>
+</section>
 {% endblock %}

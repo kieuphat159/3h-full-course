@@ -1,22 +1,31 @@
 {% extends "layout.html" %}
+{% load static %}
 
 {% block title %}Posts{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/posts_list.css' %}">
+{% endblock %}
+
 {% block content %}
-    <section>
-        <h1>Posts</h1>
+<section class="posts-section">
+    <h1 class="posts-title">Posts</h1>
+    <div class="posts-grid">
         {% for post in posts %}
-            <article>
-                <h2>
-                    <a class="content-link" href="{% url 'posts:page' slug=post.slug %}">
-                        {{ post.title }}
-                    </a>
-                </h2>
-                <p><small>{{ post.date }} by {{ post.author }}</small></p>
-                <p>{{ post.body|truncatewords:30 }}</p>
-            </article>
+        <article class="post-card">
+            <h2 class="post-title">
+                <a href="{% url 'posts:page' slug=post.slug %}">
+                    {{ post.title }}
+                </a>
+            </h2>
+            <p class="post-meta">
+                <small>{{ post.date }} — {{ post.author }}</small>
+            </p>
+            <p class="post-excerpt">{{ post.body|truncatewords:30 }}</p>
+        </article>
         {% empty %}
-            <p>No posts available.</p>
+        <p class="no-posts">No posts available.</p>
         {% endfor %}
-    </section>
+    </div>
+</section>
 {% endblock %}

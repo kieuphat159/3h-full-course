@@ -8,6 +8,7 @@
         {% block title %}Django App{% endblock %}
     </title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+     {% block extra_css %}{% endblock %}
     <script src="{% static 'js/main.js' %}" defer></script>
 </head>
 <body>

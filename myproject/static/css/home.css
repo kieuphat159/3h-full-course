@@ -1,0 +1,69 @@
+.home-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 60px); /* trừ chiều cao navbar */
+    background: linear-gradient(135deg, #1e1e1e, #333);
+    animation: fadeIn 0.6s ease-out;
+}
+
+.home-card {
+    text-align: center;
+    max-width: 700px;
+    padding: 2rem;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+
+.home-title {
+    font-size: 3rem;
+    color: #ffcc00;
+    margin-bottom: 1rem;
+    animation: fadeUp 0.8s ease-out;
+}
+
+.home-subtitle {
+    font-size: 1.3rem;
+    color: #e0e0e0;
+    margin-bottom: 2rem;
+}
+
+.home-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.btn {
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: transform 0.2s, background 0.3s;
+}
+
+.btn-primary {
+    background: #ffcc00;
+    color: #1e1e1e;
+}
+
+.btn-secondary {
+    background: transparent;
+    color: #ffcc00;
+    border: 2px solid #ffcc00;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}

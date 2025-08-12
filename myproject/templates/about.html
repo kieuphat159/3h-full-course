@@ -1,10 +1,34 @@
 {% extends "layout.html" %}
+{% load static %}
 
 {% block title %}
     About
 {% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+{% endblock %}
+
 {% block content %}
-    <h1>About</h1>
-    <p>Check out my <a href="/">Home</a> page</p>
+<section class="about-section">
+    <div class="about-card">
+        <div class="project-info">
+            <h2>About This Blog Project</h2>
+            <h5>
+                This blog was built as a personal project to practice Django,
+                combining front-end (HTML, CSS) and back-end (Python/Django). 
+                It features post management, post listing, detailed view pages, 
+                and Markdown support for better content formatting.
+            </h5>
+        </div>
+        <div class="intro">
+            This blog project is made by <strong>Kieu Nguyen Thanh Phat</strong>
+        </div>
+        <div class="contact">
+            <h2>Contact</h2>
+            <p>Email: <a href="mailto:kieuphat159@gmail.com">kieuphat159@gmail.com</a></p>
+            <p>GitHub: <a href="https://github.com/kieuphat159" target="_blank">github.com/kieuphat159</a></p>
+        </div>
+    </div>          
+</section>
 {% endblock %}

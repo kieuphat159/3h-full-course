@@ -22,6 +22,10 @@
                 <small>{{ post.date }} — {{ post.author }}</small>
             </p>
             <p class="post-excerpt">{{ post.body|truncatewords:30 }}</p>
+            <div class="post-footer">
+                <span class="post-likes">
+                    <i class="fas fa-heart">❤️</i> {{ post.total_likes }}
+                </span>
         </article>
         {% empty %}
         <p class="no-posts">No posts available.</p>

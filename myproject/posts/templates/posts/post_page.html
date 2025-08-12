@@ -5,6 +5,7 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/post_page.css' %}">
+
 {% endblock %}
 
 {% block content %}
@@ -21,6 +22,22 @@
 
     <div class="post-body">
         {{ post.body|linebreaks }}
+    </div>
+    
+    <div class="post-footer">
+        <form class="like-form" action="{% url 'posts:like-post' post.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="like-btn {% if user in post.likes.all %}liked{% endif %}">
+                <span class="heart-icon">
+                    {% if user in post.likes.all %}
+                        💚
+                    {% else %}
+                        ❤️
+                    {% endif %}
+                </span>
+                <span class="like-count">{{ post.total_likes }} Like{{ post.total_likes|pluralize }}</span>
+            </button>
+        </form>
     </div>
 </section>
 {% endblock %}

@@ -1,9 +1,18 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Post
 from django.contrib.auth.decorators import login_required
 from . import forms
 
 # Create your views here.
+def like_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    if post.likes.filter(id=request.user.id):
+        post.likes.remove(request.user)
+    else:
+        post.likes.add(request.user)
+    return redirect('posts:page', slug=post.slug)
+
+
 def post_list(request):
     posts = Post.objects.all().order_by('-date')
     return render(request, 'posts/posts_list.html', {'posts': posts})

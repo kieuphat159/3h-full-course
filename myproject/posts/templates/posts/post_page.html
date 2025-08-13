@@ -69,48 +69,97 @@ document.addEventListener('keydown', function(event) {
     <div class="post-body">
         {{ post.body|linebreaks }}
     </div>
-    
+
     <div class="post-footer">
         <form class="like-form" action="{% url 'posts:like-post' post.id %}" method="post">
-            {% csrf_token %}
-            <button type="submit" class="like-btn {% if user in post.likes.all %}liked{% endif %}">
-                <span class="heart-icon">
-                    {% if user in post.likes.all %}
-                        💚
-                    {% else %}
-                        ❤️
-                    {% endif %}
-                </span>
-                <span class="like-count">{{ post.total_likes }} Like{{ post.total_likes|pluralize }}</span>
+            <div class="post-actions">
+                {% csrf_token %}
+                <button type="submit" class="like-btn {% if user in post.likes.all %}liked{% endif %}">
+                    <span class="heart-icon">
+                        {% if user in post.likes.all %}
+                            💚
+                        {% else %}
+                            ❤️
+                        {% endif %}
+                    </span>
+                    <span class="like-count">{{ post.total_likes }} Like{{ post.total_likes|pluralize }}</span>
+                </button>
+            </form>
+            <button class="comment-btn" onclick="document.getElementById('commentForm').scrollIntoView();">
+                <span class="comment-icon">💬</span> Comment
             </button>
-        </form>
+        </div>
     </div>
+    <div class="comments-section">
+        <div class="comments-header">
+            <h3 class="comments-title">Comments</h3>
+            <span class="comments-count">{{ post.total_comments }}</span>
+        </div>
+
+        <!-- Comment Form -->
+        {% if not user.is_authenticated %}
+            <div class="login-prompt">
+                <p>Please <a href="{% url 'users:login' %}">log in</a> to comment.</p>
+            </div>
+        {% else %}
+        <form class="comment-form" id="commentForm" action="{% url 'posts:comment-post' post.id %}" method="post">
+            <div class="comment-form-header">
+                <span style="color: #ffcc00; font-weight: 600;">{{ user.username }}</span>
+            </div>
+            <textarea 
+                class="comment-textarea" 
+                placeholder="Share your thoughts..." 
+                maxlength="500"
+                oninput="updateCharCount(this)"
+                name="body"
+            ></textarea>
+            {% csrf_token %}
+            <div class="comment-form-actions">
+                <button type="submit" class="submit-comment-btn" action="{% url 'posts:comment-post' post.id %}" method="post">Post Comment</button>
+            </div>
+        </form>
+        {% endif %}
+
+        <!-- Comments List -->
+        {% if comments %}
+            <div class="comments-list">
+                {% for comment in comments %}
+                    <div class="comment">
+                <div class="comment-header">
+                    <div class="comment-author-info">
+                        <div>
+                            <div class="comment-author">{{ comment.author }}</div>
+                            <div class="comment-date">{{ comment.date }}</div>
+                        </div>
+                    </div>
+                    <div class="comment-options">
+                        <button class="comment-options-btn">⋯</button> <!-- kieuphat159 will define it soon -->
+                    </div>
+                </div>
+                <div class="comment-content">
+                    {{ comment.body|linebreaks }}
+                </div>
+                <div class="comment-actions">
+                    <button class="comment-like-btn">        <!--  It will   -->
+                        <span>🤍</span>                     <!--  be        -->
+                        <span>8</span>                      <!--  defined  -->
+                    </button>                               <!--  soon    -->
+                    <button class="reply-btn">              <!----> 
+                        Reply                               <!---->
+                    </button>                               <!---->     
+                </div>
+            </div>
+        </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="no-comments">
+                <div class="no-comments-icon">💬</div>
+                <div class="no-comments-text">No comments yet</div>
+                <div class="no-comments-subtext">Be the first to share your thoughts!</div>
+            </div>
+        {% endif %}
+    </div>
+
 </section>
 {% endblock %}
-
-<script>
-function toggleOptionsMenu() {
-    const menu = document.getElementById('optionsMenu');
-    menu.classList.toggle('show');
-}
-
-// Close menu when clicking outside
-document.addEventListener('click', function(event) {
-    const menu = document.getElementById('optionsMenu');
-    const button = document.querySelector('.options-btn');
-    
-    if (menu && !menu.contains(event.target) && !button.contains(event.target)) {
-        menu.classList.remove('show');
-    }
-});
-
-// Close menu when pressing Escape key
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape') {
-        const menu = document.getElementById('optionsMenu');
-        if (menu) {
-            menu.classList.remove('show');
-        }
-    }
-});
-</script>

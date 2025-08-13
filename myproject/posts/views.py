@@ -4,7 +4,25 @@ from django.contrib.auth.decorators import login_required
 from . import forms
 
 # Create your views here.
+def comment_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    if request.method == 'POST':
+        form = forms.CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.author = request.user
+            comment.save()
+            return redirect('posts:page', slug=post.slug)
+        else:
+            return render(request, 'posts/post_page.html', {'post': post, 'form': form})
+    else:
+        form = forms.CommentForm()
+    return render(request, 'posts/post_page.html', {'post': post, 'form': form})
+
 def like_post(request, post_id):
+    if not request.user.is_authenticated:
+        return redirect('users:login')
     post = get_object_or_404(Post, id=post_id)
     if post.likes.filter(id=request.user.id):
         post.likes.remove(request.user)
@@ -39,8 +57,9 @@ def post_list(request):
     return render(request, 'posts/posts_list.html', {'posts': posts})
 
 def post_page(request, slug):
-    post = Post.objects.all().get(slug=slug)
-    return render(request, 'posts/post_page.html', {'post': post})
+    post = get_object_or_404(Post, slug=slug)
+    comments = post.comments.all().order_by('-date')
+    return render(request, 'posts/post_page.html', {'post': post, 'comments': comments})
 
 @login_required(login_url="users:login")
 def post_new(request):

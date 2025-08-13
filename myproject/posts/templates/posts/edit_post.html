@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block title %}Edit Post{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/post_new.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="new-post-section">
+    <h1 class="new-post-title">{{ post.title }}</h1>
+    <form action="{% url 'posts:edit-post' post.id %}" class="post-form" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="form-submit">Submit</button>
+    </form>
+</section>
+{% endblock %}

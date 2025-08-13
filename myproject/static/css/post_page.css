@@ -36,3 +36,272 @@
 .post-body p {
     margin-bottom: 1rem;
 }
+
+.post-actions {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.delete-btn {
+    background: linear-gradient(145deg, #ff4545, #e53935);
+    border: none;
+    border-radius: 8px;
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(255, 69, 69, 0.3);
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+}
+
+.delete-btn:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s;
+}
+
+.delete-btn:hover:before {
+    left: 100%;
+}
+
+.delete-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 69, 69, 0.4);
+    background: linear-gradient(145deg, #e53935, #d32f2f);
+}
+
+.delete-btn:active {
+    transform: translateY(0);
+    transition: transform 0.1s;
+}
+
+.delete-icon {
+    font-size: 14px;
+    transition: transform 0.3s ease;
+}
+
+.delete-btn:hover .delete-icon {
+    transform: scale(1.1);
+}
+
+.edit-btn {
+    background: linear-gradient(145deg, #ffa726, #ff9800);
+    border: none;
+    border-radius: 8px;
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(255, 167, 38, 0.3);
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+}
+
+.edit-btn:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s;
+}
+
+.edit-btn:hover:before {
+    left: 100%;
+}
+
+.edit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 167, 38, 0.4);
+    background: linear-gradient(145deg, #ff9800, #f57c00);
+}
+
+.edit-btn:active {
+    transform: translateY(0);
+    transition: transform 0.1s;
+}
+
+.edit-icon {
+    font-size: 14px;
+    transition: transform 0.3s ease;
+}
+
+.edit-btn:hover .edit-icon {
+    transform: scale(1.1);
+}
+
+@media (max-width: 600px) {
+    .post-actions {
+        justify-content: center;
+    }
+    
+    .delete-btn, .edit-btn {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+    }
+}
+
+/* Override post-title from post_page.css */
+.post-title {
+    font-size: 2.5rem !important;
+    font-weight: bold !important;
+    color: #ffcc00 !important;
+    text-align: center !important;
+    margin: 0 !important;
+    flex: 1;
+}
+
+.post-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 0.5rem;
+    width: 100%;
+}
+
+.post-options {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.options-btn {
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 8px;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    color: #ffcc00;
+}
+
+.options-btn:hover {
+    background: rgba(255, 215, 0, 0.2);
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+}
+
+.dots {
+    font-size: 1.2rem;
+    font-weight: bold;
+    line-height: 1;
+}
+
+.options-menu {
+    position: absolute;
+    top: 45px;
+    right: 0;
+    background: linear-gradient(135deg, rgba(30, 30, 30, 0.95) 0%, rgba(50, 50, 50, 0.95) 100%);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 12px;
+    min-width: 150px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(20px);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px) scale(0.95);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+}
+
+.options-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+.option-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    color: #ddd;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border-radius: 8px;
+    margin: 4px;
+}
+
+.option-item:hover {
+    background: rgba(255, 215, 0, 0.1);
+    color: #ffcc00;
+}
+
+.delete-option:hover {
+    background: rgba(255, 69, 69, 0.1) !important;
+    color: #ff6b6b !important;
+}
+
+.option-icon {
+    font-size: 0.9rem;
+}
+
+/* Arrow pointer */
+.options-menu::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    right: 12px;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid rgba(50, 50, 50, 0.95);
+}
+
+@media (max-width: 768px) {
+    .post-title {
+        font-size: 2rem !important;
+    }
+    
+    .options-btn {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .dots {
+        font-size: 1rem;
+    }
+    
+    .options-menu {
+        min-width: 130px;
+        right: -10px;
+    }
+    
+    .option-item {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
+}
+

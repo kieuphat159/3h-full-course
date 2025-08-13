@@ -5,6 +5,32 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/post_page.css' %}">
+<script>
+function toggleOptionsMenu() {
+    const menu = document.getElementById('optionsMenu');
+    menu.classList.toggle('show');
+}
+
+// Close menu when clicking outside
+document.addEventListener('click', function(event) {
+    const menu = document.getElementById('optionsMenu');
+    const button = document.querySelector('.options-btn');
+    
+    if (menu && !menu.contains(event.target) && !button.contains(event.target)) {
+        menu.classList.remove('show');
+    }
+});
+
+// Close menu when pressing Escape key
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        const menu = document.getElementById('optionsMenu');
+        if (menu) {
+            menu.classList.remove('show');
+        }
+    }
+});
+</script>
 
 {% endblock %}
 
@@ -14,7 +40,27 @@
         <img class="post-banner" src="{{ post.banner.url }}" alt="{{ post.title }}">
     {% endif %}
 
-    <h1 class="post-title">{{ post.title }}</h1>
+    <div class="post-title-row">
+        <h1 class="post-title">{{ post.title }}</h1>
+        {% if user == post.author or user.is_superuser %}
+            <div class="post-options">
+                <button class="options-btn" onclick="toggleOptionsMenu()" aria-label="Post options">
+                    <span class="dots">⋯</span>
+                </button>
+                <div class="options-menu" id="optionsMenu">
+                    <a href="{% url 'posts:edit-post' post.id %}" class="option-item">
+                        <span class="option-icon">✏️</span>
+                        Edit Post
+                    </a>
+                    <a href="{% url 'posts:delete-post' post.id %}" class="option-item delete-option">
+                        <span class="option-icon">🗑️</span>
+                        Delete Post
+                    </a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    
     <div class="post-meta">
         <span>By {{ post.author.username }}</span> | 
         <span>{{ post.date }}</span>
@@ -41,3 +87,30 @@
     </div>
 </section>
 {% endblock %}
+
+<script>
+function toggleOptionsMenu() {
+    const menu = document.getElementById('optionsMenu');
+    menu.classList.toggle('show');
+}
+
+// Close menu when clicking outside
+document.addEventListener('click', function(event) {
+    const menu = document.getElementById('optionsMenu');
+    const button = document.querySelector('.options-btn');
+    
+    if (menu && !menu.contains(event.target) && !button.contains(event.target)) {
+        menu.classList.remove('show');
+    }
+});
+
+// Close menu when pressing Escape key
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        const menu = document.getElementById('optionsMenu');
+        if (menu) {
+            menu.classList.remove('show');
+        }
+    }
+});
+</script>

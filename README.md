@@ -4,6 +4,7 @@ A Django blog project based on a YouTube tutorial. There are some features:
 - User authentication (login/logout)
 - Create and manage blog posts
 - Like and unlike posts
+- Comment posts
 ## Project Structure
 
 - `myproject/` - Main Django project folder
